@@ -18,4 +18,13 @@
 
 bin_PROGRAMS = picotm-perf
 
-picotm_perf_SOURCES = main.c
+picotm_perf_SOURCES = main.c \
+                      opts.c \
+                      opts.h \
+                      ptr.h \
+                      test.c \
+                      test.h \
+                      testhlp.c \
+                      testhlp.h \
+                      tm.c \
+                      tm.h

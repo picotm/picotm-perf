@@ -17,43 +17,24 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include "test.h"
-#include "tm.h"
-#include "opts.h"
+#pragma once
 
-static const struct test_func*
-find_test(enum opt_io_pattern io_pattern)
-{
-    if (io_pattern >= number_of_tm_tests()) {
-        fprintf(stderr, "no test for given I/O pattern\n");
-        return NULL;
-    }
-    return tm_test + io_pattern;
-}
+enum parse_opts_result {
+    PARSE_OPTS_OK,
+    PARSE_OPTS_EXIT,
+    PARSE_OPTS_ERROR
+};
 
-int
-main(int argc, char* argv[])
-{
-    switch (parse_opts(argc, argv)) {
-        case PARSE_OPTS_EXIT:
-            return EXIT_SUCCESS;
-        case PARSE_OPTS_ERROR:
-            return EXIT_FAILURE;
-        default:
-            break;
-    }
+enum opt_io_pattern {
+    IO_PATTERN_RANDOM,
+    IO_PATTERN_SEQUENTIAL
+};
 
-    const struct test_func* test = find_test(g_io_pattern);
-    if (!test) {
-        return EXIT_FAILURE;
-    }
+extern enum opt_io_pattern g_io_pattern;
+extern unsigned long       g_nthreads;
+extern unsigned long       g_nloads;
+extern unsigned long       g_nstores;
+extern unsigned long       g_nmsecs;
 
-    int res = run_test(g_nthreads, g_nmsecs, test, g_nloads, g_nstores);
-    if (res < 0) {
-        return EXIT_FAILURE;
-    }
-
-    return EXIT_SUCCESS;
-}
+enum parse_opts_result
+parse_opts(int argc, char* argv[]);

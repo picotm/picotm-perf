@@ -17,43 +17,38 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
+#include "testhlp.h"
+#include <picotm/picotm.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "test.h"
-#include "tm.h"
-#include "opts.h"
+#include <string.h>
 
-static const struct test_func*
-find_test(enum opt_io_pattern io_pattern)
+void
+abort_transaction_on_error(const char* origin)
 {
-    if (io_pattern >= number_of_tm_tests()) {
-        fprintf(stderr, "no test for given I/O pattern\n");
-        return NULL;
-    }
-    return tm_test + io_pattern;
-}
-
-int
-main(int argc, char* argv[])
-{
-    switch (parse_opts(argc, argv)) {
-        case PARSE_OPTS_EXIT:
-            return EXIT_SUCCESS;
-        case PARSE_OPTS_ERROR:
-            return EXIT_FAILURE;
+    switch (picotm_error_status()) {
+        case PICOTM_CONFLICTING:
+            fprintf(stderr, "%s: Conficting transactions\n", origin);
+            break;
+        case PICOTM_REVOCABLE:
+            fprintf(stderr, "%s: Irrevocability required\n", origin);
+            break;
+        case PICOTM_ERROR_CODE: {
+            enum picotm_error_code error_code =
+                picotm_error_as_error_code();
+            fprintf(stderr, "%s: Error code %d\n", origin, (int)error_code);
+            break;
+        }
+        case PICOTM_ERRNO: {
+            int errno_code = picotm_error_as_errno();
+            fprintf(stderr, "%s: Errno code %d (%s)\n", origin, errno_code,
+                    strerror(errno_code));
+            break;
+        }
         default:
+            fprintf(stderr, "%s, No error detected.", origin);
             break;
     }
 
-    const struct test_func* test = find_test(g_io_pattern);
-    if (!test) {
-        return EXIT_FAILURE;
-    }
-
-    int res = run_test(g_nthreads, g_nmsecs, test, g_nloads, g_nstores);
-    if (res < 0) {
-        return EXIT_FAILURE;
-    }
-
-    return EXIT_SUCCESS;
+    abort();
 }

@@ -17,43 +17,18 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include "test.h"
-#include "tm.h"
-#include "opts.h"
+#pragma once
 
-static const struct test_func*
-find_test(enum opt_io_pattern io_pattern)
-{
-    if (io_pattern >= number_of_tm_tests()) {
-        fprintf(stderr, "no test for given I/O pattern\n");
-        return NULL;
-    }
-    return tm_test + io_pattern;
-}
+typedef void (*call_func)(unsigned long tid,
+                          unsigned long nloads,
+                          unsigned long nstores);
+
+struct test_func {
+    const char* name;
+    call_func   call;
+};
 
 int
-main(int argc, char* argv[])
-{
-    switch (parse_opts(argc, argv)) {
-        case PARSE_OPTS_EXIT:
-            return EXIT_SUCCESS;
-        case PARSE_OPTS_ERROR:
-            return EXIT_FAILURE;
-        default:
-            break;
-    }
-
-    const struct test_func* test = find_test(g_io_pattern);
-    if (!test) {
-        return EXIT_FAILURE;
-    }
-
-    int res = run_test(g_nthreads, g_nmsecs, test, g_nloads, g_nstores);
-    if (res < 0) {
-        return EXIT_FAILURE;
-    }
-
-    return EXIT_SUCCESS;
-}
+run_test(unsigned long nthreads, unsigned long nmsecs,
+         const struct test_func* test, unsigned long nloads,
+         unsigned long nstores);
