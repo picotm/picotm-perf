@@ -1,0 +1,31 @@
+
+picotm Performance Tests
+
+
+About picotm-perf
+=================
+
+  Picotm-perf is a tool for measuring the performance of picotm
+  transactions. It simulates a set of memory transactions with typical
+  load and store patterns.
+
+
+Downloads and Contact
+=====================
+
+  Picotm-perf is part of the picotm transaction manager available at the
+  project's website at
+
+    http://picotm.org
+
+  The GitHub repository is available at
+
+    http://github.com/picotm/picotm-perf
+
+
+License
+=======
+
+  Picotm-perf is distributed under the terms of the MIT License. You
+  can find the full license text in the file LICENSE or at
+  http://choosealicense.com/licenses/mit/.
