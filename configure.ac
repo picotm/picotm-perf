@@ -51,6 +51,15 @@ AC_CHECK_HEADERS([sys/cdefs.h])
 
 
 dnl
+dnl Picotm
+dnl
+
+CHECK_PICOTM
+CHECK_PICOTM_TM
+CHECK_PICOTM_C
+
+
+dnl
 dnl Output
 dnl
 
