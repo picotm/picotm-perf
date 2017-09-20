@@ -64,6 +64,7 @@ dnl Output
 dnl
 
 AC_CONFIG_FILES([Makefile
+                 extras/Makefile
                  src/Makefile])
 AC_OUTPUT
 
