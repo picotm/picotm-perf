@@ -48,9 +48,9 @@ struct thread {
     pthread_barrier_t* wait;
     unsigned long      nmsecs;
 
-    unsigned long   res_niters;
-    unsigned long   res_nmsecs;
-    unsigned long   res_nrestarts;
+    unsigned long long  res_niters;
+    unsigned long long  res_nmsecs;
+    unsigned long long  res_nrestarts;
 
     call_func   call;
     unsigned long tid;
@@ -109,7 +109,7 @@ thread_func(void* arg)
     self->res_nmsecs = 0;
     self->res_nrestarts = 0;
 
-    unsigned long iters = 0;
+    unsigned long long iters = 0;
 
     long long res = getmsofday(NULL);
     if (res < 0) {
@@ -118,7 +118,7 @@ thread_func(void* arg)
     unsigned long long start_time = res;
     unsigned long long current_time = start_time;
 
-    unsigned long nrestarts = 0;
+    unsigned long long nrestarts = 0;
 
     while ((current_time - start_time) < self->nmsecs) {
 
@@ -264,7 +264,7 @@ print_results(const struct thread* beg, const struct thread* end)
     const struct thread* pos = beg;
 
     while (pos < end) {
-        printf("%tu %lu %lu %lu\n", pos - beg + 1, pos->res_nmsecs,
+        printf("%tu %llu %llu %llu\n", pos - beg + 1, pos->res_nmsecs,
                pos->res_niters, pos->res_nrestarts);
         ++pos;
     }
