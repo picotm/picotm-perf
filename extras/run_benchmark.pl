@@ -74,7 +74,7 @@ use File::Temp qw/ tempfile tempdir /;
 
 my $PDF_FILENAME = 'results.pdf';
 
-my $TIME_MSECS = 60;
+my $TIME_MSECS = 60000;
 my $OUTDIR = 'benchmark-' . `date -u +%s`;
 chomp $OUTDIR;
 
