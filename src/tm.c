@@ -19,7 +19,7 @@
 
 #include "tm.h"
 #include <picotm/picotm.h>
-#include <picotm/picotm-tm.h>
+#include <picotm/picotm-tm-ctypes.h>
 #include <picotm/stdlib-tm.h>
 #include "ptr.h"
 #include "testhlp.h"
