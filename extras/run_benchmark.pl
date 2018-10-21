@@ -47,7 +47,7 @@ gnuplot for generating the output.
 
 =head1 AUTHOR
 
-Thomas Zimmermann L<tdz@users.sourceforge.net>
+Thomas Zimmermann L<contact@tzimmermann.org>
 
 =head1 REPORTING BUGS
 
