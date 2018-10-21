@@ -1,6 +1,6 @@
 #
 # picotm-perf - Picotm Performance Tests
-# Copyright (c) 2017    Thomas Zimmermann <contact@tzimmermann.org>
+# Copyright (c) 2018    Thomas Zimmermann <contact@tzimmermann.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,4 +18,4 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
 
-EXTRA_DIST = run_benchmark.pl
+EXTRA_DIST = GPL-3.0-or-later.txt
